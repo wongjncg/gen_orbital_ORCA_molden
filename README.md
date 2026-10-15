@@ -20,7 +20,7 @@ Then, use `construct_AO_info.m` to map the coordinate and atomic orbital angular
 ```
 AO = construct_AO_info('coord.dat', basis)
 ```
-The total number of AOs must match the number of LCAO coefficients. Atomic numbers are mapped to element symbols in 'element_table.dat'. Add to the file if the atomic species of interest does not exist.
+The total number of AOs must match the number of LCAO coefficients. Atomic numbers are mapped to element symbols in 'element_table.txt'. Add to the file if the atomic species of interest does not exist.
 
 Before running `gen_MO.m`, you must first define a 3D grid (in atomic units) stored as a structure array that contains the following info:
 - **X, Y, Z**: 3D grid coordinates. Works with both `ndgrid` and `meshgrid` in MATLAB.
