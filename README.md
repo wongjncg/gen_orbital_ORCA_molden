@@ -23,7 +23,7 @@ AO = construct_AO_info('coord.dat', basis)
 The total number of AOs must match the number of LCAO coefficients. Atomic numbers are mapped to element symbols in 'element_table.dat'. Add to the file if the atomic species of interest does not exist.
 
 Before running `gen_MO.m`, you must first define a 3D grid (in atomic units) stored as a structure array that contains the following info:
-- **X,Y,Z**: 3D grid coordinates. Works with both `ndgrid` and `meshgrid` in MATLAB.
+- **X, Y, Z**: 3D grid coordinates. Works with both `ndgrid` and `meshgrid` in MATLAB.
 - **dV**: Unit volume
 
 For each MO, run `gen_MO.m`. The function can generate either Gaussian-type or Slater-type orbitals from the LCAO coefficients. Inputs needed:
@@ -35,9 +35,11 @@ For each MO, run `gen_MO.m`. The function can generate either Gaussian-type or S
 - Orbital type of choice: **'Gaussian'** or **'Slater'**
 - Ionization Potential (IP) or Electron Affinity (EA) energy below vacuum level (if **'Slater'**)
 - IP/EA unit (if **'Slater'**)
+
 Output:
 - Volumetric data
 - Norm
+
 **Note: Volumetric data output by `gen_MO.m` is unnormalized by default!** Check output norm and normalize data accordingly.
 
 See `/examples` for sample MATLAB script to setup and run the code.
@@ -53,5 +55,7 @@ R_l(r) = \sum_p c_p r^l e^{-\alpha_p r^2}
 - Equation for radial component of STOs:
 ```math
 R_l(r) = r^l e^{-\zeta r}
-\zeta = \frac{\sqrt{2 E m_e}}{hbar}
+```
+```math
+\zeta = \frac{\sqrt{2 E m_e}}{\hbar}
 ```
