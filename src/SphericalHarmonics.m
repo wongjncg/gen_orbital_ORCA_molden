@@ -1,9 +1,10 @@
 function[Y] = SphericalHarmonics(l,m,x,y,z,cplx_flag)
-%
-%! Author: JCW (02/07/2025)
-%! - Given the corresponding l and m values, provide the unnormalized spherical harmonics from the list of stored values.
-%! - Implemented up to l=2 only!!!
-%
+
+%{
+Author: JCW (02/07/2025)
+- Given the corresponding l and m values, provide the unnormalized spherical harmonics from the list of stored values.
+- Implemented up to l=2 only!!!
+%}
 
   r = sqrt(x.^2 + y.^2 + z.^2);
   % Complex spherical harmonics
@@ -31,6 +32,7 @@ function[Y] = SphericalHarmonics(l,m,x,y,z,cplx_flag)
         Y = complex(x,y).^2./r.^2;
       end
     end
+
   % Real spherical harmonics
   elseif cplx_flag == 0
     if l == 0
@@ -59,7 +61,7 @@ function[Y] = SphericalHarmonics(l,m,x,y,z,cplx_flag)
   end
 
   % Set NaN values of 0/0 for x=y=z=r=0 to zero.
-  % Note that 1/r^l dependence in angular component cancels out with r^l dependence in radial component.
+  % In the AO, 1/r^l in angular component cancels out with r^l in radial component.
   Y(isnan(Y)) = 0;
 
 end

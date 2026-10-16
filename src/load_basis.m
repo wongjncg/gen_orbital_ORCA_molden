@@ -1,9 +1,10 @@
 function[basis] = load_basis(filename) 
-%
-%! Author: JCW(09/10/2026)
-%! - Load basis set info file for a single atomic species from MOLDEN
-%! - Implementation up to d-orbitals ONLY!
-%
+
+%{
+Author: JCW(09/10/2026)
+- Load basis set info file for a single atomic species from MOLDEN
+- Implementation only reads up to d-orbitals ONLY!
+%}
 
   % Read GTO basis file into a character vector
   fid = fopen(filename,'r');
@@ -19,11 +20,11 @@ function[basis] = load_basis(filename)
   orb_d = strfind(str,'d');
   
   % Find header line corresponding to each contracted Gaussian
-  % Then extract info on orbital type and number of primitive Gaussians
+  % Then extract info on orbital type and number Gaussian primitives
   header_line = []; % Header line
-  orbtype = []; % Orbital type
-  n_pG = []; % Number of primitive Gaussians
-  tot_cG = 0; % Count total number of contracted Gaussians
+  orbtype = [];     % Orbital type
+  n_pG = [];        % Number of Gaussian primitives
+  tot_cG = 0;       % Total number of contracted Gaussians w/out angular component
   for i = 1:nlines
     if orb_s{i} == 1
       header_line = cat(1,header_line,i);
@@ -45,14 +46,14 @@ function[basis] = load_basis(filename)
       tot_cG = tot_cG + 1;
     end
   end
-  % Total number of contracted Gaussians w/out angular component
   basis.tot_cG = tot_cG;
+
   % Store angular component information
   basis.l = [];
   basis.m = [];
   basis.cG = [];
   for i = 1:tot_cG
-    % Extract coefficients and exponents of primitive Gaussians for each contracted Gaussian
+    % Extract coefficients and exponents of Gaussian primitives for each contracted Gaussian
     varname = strcat('cGaussian',num2str(i));
     basis.(varname).alpha = [];
     basis.(varname).cp = [];
@@ -64,9 +65,9 @@ function[basis] = load_basis(filename)
     basis.(varname).orb = orbtype(i);
     basis.(varname).n_pG = n_pG(i);
     % Construct basis ordering of l and m values for each atomic species
-    % Also set which contracted Gaussian to read for each corresponding l value
-    % m values for l=1 (p-orbital) ordered as (1,-1,0). If real-valued, as (x,y,z).
-    % m values for l=2 (d-orbital) ordered as (0,1,-1,2,-2). If real-valued, as (d_z^2,d_xz,d_yz,d_x^2-y^2,d_xy).
+    % Set which contracted Gaussian to read for each corresponding l value
+    % For l=1 (p-orbital), m ordered as (1,-1,0). If real-valued, as (x,y,z).
+    % For l=2 (d-orbital), m ordered as (0,1,-1,2,-2). If real-valued, as (d_z^2,d_xz,d_yz,d_x^2-y^2,d_xy).
     if orbtype(i) == 's'
       basis.l = cat(1,basis.l,0);
       basis.cG = cat(1,basis.cG,i);

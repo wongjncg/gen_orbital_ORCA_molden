@@ -1,12 +1,12 @@
 function[AO_info] = construct_AO_info(coordfile,basisfile)
-%
-%! Author: JCW(09/10/2026)
-%! - Map coordinate and atomic basis (inc. angular component) info to the AOs for each MO:
-%! - AO ordering is consistent for all MOs!
-%
+
+%{
+Author: JCW(09/10/2026)
+- Map coordinate and atomic basis (inc. angular component) info to the AOs for each MO.
+- AO ordering is consistent for all MOs!
+%}
 
   % Load coordinate file extracted from MOLDEN
-  % Contains info on atomic species and Cartesian coordinates (in Bohr)
   if ischar(coordfile) == 1
     coord = importdata(coordfile);
   else
@@ -15,9 +15,9 @@ function[AO_info] = construct_AO_info(coordfile,basisfile)
 
   % Generate info for each AO
   AO_info.pos_ind = []; % Atom index in coordinate file
-  AO_info.l = []; % Orbital angular momentum
-  AO_info.m = []; % Magnetic quantum number
-  AO_info.cG = []; % Contracted Gaussian file to read
+  AO_info.l = [];       % Orbital angular momentum
+  AO_info.m = [];       % Magnetic quantum number
+  AO_info.cG = [];      % Contracted Gaussian file to read
   for i=1:size(coord,1)
     elem = get_elementsymbol(coord(i,2)); % Generate element symbol for array variable name
     for j = 1:length(basisfile.(elem).l)
